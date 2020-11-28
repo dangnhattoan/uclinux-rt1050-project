@@ -36,7 +36,7 @@ if [ "${gui}" != "" -a -x "${gui}" ]; then
     ${gui} &
 fi
 
-/etc/netstart.sh &
+#/etc/netstart.sh &
 ## Wait for networking to set up
 # sleep 2
 # mount -o nolock,rsize=1024 172.17.0.1:/home/vlad/test /mnt
