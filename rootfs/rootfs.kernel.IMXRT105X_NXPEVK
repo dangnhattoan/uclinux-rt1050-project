@@ -498,37 +498,10 @@ CONFIG_ARCH_MIGHT_HAVE_PC_PARPORT=y
 #
 CONFIG_SCSI_MOD=y
 # CONFIG_RAID_ATTRS is not set
-CONFIG_SCSI=y
-CONFIG_SCSI_DMA=y
-# CONFIG_SCSI_MQ_DEFAULT is not set
-CONFIG_SCSI_PROC_FS=y
-
-#
-# SCSI support type (disk, tape, CD-ROM)
-#
-CONFIG_BLK_DEV_SD=y
-# CONFIG_CHR_DEV_ST is not set
-# CONFIG_CHR_DEV_OSST is not set
-# CONFIG_BLK_DEV_SR is not set
-# CONFIG_CHR_DEV_SG is not set
-# CONFIG_CHR_DEV_SCH is not set
-# CONFIG_SCSI_CONSTANTS is not set
-# CONFIG_SCSI_LOGGING is not set
-# CONFIG_SCSI_SCAN_ASYNC is not set
-
-#
-# SCSI Transports
-#
-# CONFIG_SCSI_SPI_ATTRS is not set
-# CONFIG_SCSI_SAS_ATTRS is not set
-# CONFIG_SCSI_SAS_LIBSAS is not set
-# CONFIG_SCSI_SRP_ATTRS is not set
-# CONFIG_SCSI_LOWLEVEL is not set
-# CONFIG_SCSI_DH is not set
-# CONFIG_SCSI_OSD_INITIATOR is not set
+# CONFIG_SCSI is not set
+# CONFIG_SCSI_DMA is not set
 # CONFIG_ATA is not set
 # CONFIG_MD is not set
-# CONFIG_TARGET_CORE is not set
 # CONFIG_NVM is not set
 
 #
@@ -759,11 +732,7 @@ CONFIG_VF_PIT_TIMER=y
 # CONFIG_SUNXI_SRAM is not set
 # CONFIG_SOC_TI is not set
 # CONFIG_PM_DEVFREQ is not set
-CONFIG_EXTCON=y
-
-#
-# Extcon Device Drivers
-#
+# CONFIG_EXTCON is not set
 # CONFIG_MEMORY is not set
 # CONFIG_IIO is not set
 # CONFIG_PWM is not set
