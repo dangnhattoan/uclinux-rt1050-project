@@ -1,4 +1,5 @@
 # uclinux-rt1050-project boot log
+```
 U-Boot 2017.09-rc1 (Nov 27 2020 - 22:14:32 +0800)
 
 CPU: i.MX RT105x at 600MHz
@@ -89,4 +90,4 @@ Serial: VF610 driver
 Freeing unused kernel memory: 320K (800e8000 - 80138000)
 init started: BusyBox v1.24.2 (2020-11-28 12:41:08 +08)
 
-
+```
