@@ -30,12 +30,6 @@
 		serial0 = &uart0;
 	};
 
-	core_clk: core_clk {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <600000000>;
-	};
-
 	periph_clk: periph_clk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -48,12 +42,6 @@
 		clock-frequency = <6000000>;
 	};
 
-	osc_clk: osc_clk {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <24000000>;
-	};
-	
 	soc {
 		aips0: aips-bus@40000000 {
 			compatible = "fsl,aips-bus", "simple-bus";
