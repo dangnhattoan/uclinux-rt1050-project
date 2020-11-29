@@ -27,14 +27,8 @@
 
 	aliases {
 		pit0 = &pit;
-		gpio0 = &gpio1;
-		gpio1 = &gpio2;
-		gpio2 = &gpio3;
-		gpio3 = &gpio4;
-		gpio4 = &gpio5;
 		serial0 = &uart0;
 		esdhc0 = &esdhc0;
-		i2c0 = &lpi2c1;
 	};
 
 	core_clk: core_clk {
@@ -98,12 +92,6 @@
 	};
 
 	
-	lpi2c_clk: lpi2c_clk {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <60000000>;
-	};
-
 	soc {
 		aips0: aips-bus@40000000 {
 			compatible = "fsl,aips-bus", "simple-bus";
@@ -134,62 +122,7 @@
 				compatible = "fsl,imxrt105x-iomuxc";
 				reg = <0x401f8000 0x4000>;
 			};
-
-			gpio1: gpio@401b8000 {
-				compatible = "fsl,imxrt105x-gpio";
-				reg = <0x401b8000 0x1000>;
-				gpio-controller;
-				#gpio-cells = <2>;
-				interrupts = <80>, <81>;
-				interrupt-controller;
-				#interrupt-cells = <2>;
-				gpio-ranges = <&iomuxc 0 0 32>;
-			};
-
-			gpio2: gpio@401bc000 {
-				compatible = "fsl,imxrt105x-gpio";
-				reg = <0x401bc000 0x1000>;
-				gpio-controller;
-				#gpio-cells = <2>;
-				interrupts = <82>, <83>;
-				interrupt-controller;
-				#interrupt-cells = <2>;
-				gpio-ranges = <&iomuxc 0 32 32>;
-			};
-
-			gpio3: gpio@401c0000 {
-				compatible = "fsl,imxrt105x-gpio";
-				reg = <0x401c0000 0x1000>;
-				gpio-controller;
-				#gpio-cells = <2>;
-				interrupts = <84>, <85>;
-				interrupt-controller;
-				#interrupt-cells = <2>;
-				gpio-ranges = <&iomuxc 0 64 32>;
-			};
-
-			gpio4: gpio@401c4000 {
-				compatible = "fsl,imxrt105x-gpio";
-				reg = <0x401c4000 0x1000>;
-				gpio-controller;
-				#gpio-cells = <2>;
-				interrupts = <86>, <87>;
-				interrupt-controller;
-				#interrupt-cells = <2>;
-				gpio-ranges = <&iomuxc 0 96 32>;
-			};
-
-			gpio5: gpio@400c0000 {
-				compatible = "fsl,imxrt105x-gpio";
-				reg = <0x400c0000 0x1000>;
-				gpio-controller;
-				#gpio-cells = <2>;
-				interrupts = <88>, <89>;
-				interrupt-controller;
-				#interrupt-cells = <2>;
-				gpio-ranges = <&iomuxc 0 128 14>;
-			};
-
+			
 			uart0: serial@40184000 {
 				compatible = "fsl,imxrt1050-lpuart";
 				reg = <0x40184000 0x1000>;
@@ -221,41 +154,9 @@
 				status = "disabled";
 			};
 			
-	
-			
-			lpi2c1: lpci2c@403f0000 {
-				compatible = "fsl,imx7ulp-lpi2c";
-				reg = <0x403f0000 0x4000>;
-				interrupts = <28>;
-				clocks = <&lpi2c_clk>;
-				status = "disabled";
-			};
 		};
 	};
 
-	leds {
-		compatible = "gpio-leds";
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_leds>;
-
-		user-led {
-			gpios = <&gpio1 26 GPIO_ACTIVE_LOW>;
-			retain-state-suspended;
-			default-state = "off";
-		};
-	};
-
-	gpio-keys {
-		compatible = "gpio-keys";
-		pinctrl-0 = <&pinctrl_gpio_key>;
-		pinctrl-names = "default";
-
-		button_0 {
-			label = "Button 0";
-			gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_A>;
-		};
-	};
 };
 
 &uart0 {
@@ -297,30 +198,6 @@
 			MXRT105X_PAD_AD_B0_13_LPUART1_RX	MXRT105X_PAD_CFG_UART
 		>;
 	};
-	pinctrl_gpio: gpiogrp {
-		fsl,pins = <
-			MXRT105X_PAD_AD_B0_01_GPIO1_IO01	MXRT105X_PAD_CFG_GPIO
-		>;
-	};
-	pinctrl_leds: ledsgrp {
-		fsl,pins = <
-			MXRT105X_PAD_AD_B1_10_GPIO1_IO26	MXRT105X_PAD_CFG_GPIO
-			MXRT105X_PAD_AD_B1_11_GPIO1_IO27	MXRT105X_PAD_CFG_GPIO
-		>;
-	};
-	pinctrl_gpio_key: gpiokeygrp {
-		fsl,pins = <
-			MXRT105X_PAD_AD_B0_00_GPIO1_IO00	MXRT105X_PAD_CFG_GPIO
-		>;
-	};
-
-	pinctrl_lpi2c1: lpi2cgrp {
-		fsl,pins = <
-			MXRT105X_PAD_AD_B1_00_LPI2C1_SCL	MXRT105X_PAD_CFG_I2C
-			MXRT105X_PAD_AD_B1_01_LPI2C1_SDA	MXRT105X_PAD_CFG_I2C
-		>;
-	};
-
 	pinctrl_ft5x2: ft5x2grp {
 		fsl,pins = <
 			MXRT105X_PAD_AD_B0_11_GPIO1_IO11	MXRT105X_PAD_CFG_GPIO
@@ -328,23 +205,3 @@
 	};
 };
 
-&lpi2c1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_lpi2c1>;
-	status = "okay";
-
-	imx-ccm-init = "fsl,imx6sx-ccm";
-
-	#address-cells = <1>;
-	#size-cells = <0>;
-
-	ft: touchscreen {
-		compatible = "focaltech,ft5x2";
-		reg = <0x38>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_ft5x2>;
-		x-max = <480>;
-		y-max = <272>;
-		irq-gpio = <&gpio1 11 GPIO_ACTIVE_LOW>;
-	};
-};
