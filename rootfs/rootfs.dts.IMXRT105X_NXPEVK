@@ -36,11 +36,6 @@
 		clock-frequency = <600000000>;
 	};
 
-	ipg_clk: ipg_clk {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <150000000>;
-	};
 
 	periph_clk: periph_clk {
 		compatible = "fixed-clock";
@@ -83,13 +78,6 @@
 		#clock-cells = <0>;
 		clock-frequency = <50000000>;
 	};
-
-	usdhc_clk: usdhc_clk {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <22000000>;
-	};
-
 	
 	soc {
 		aips0: aips-bus@40000000 {
@@ -107,11 +95,6 @@
 				pit_cnt = <4>;
 			};
 			
-			ana: ana@400d8000 {
-				compatible = "fsl,imx6sx-anatop";
-				reg = <0x400d8000 0x200>;
-			};
-
 			ccm: ccm@400fc000 {
 				compatible = "fsl,imx6sx-ccm";
 				reg = <0x400fc000 0x100>;
@@ -130,20 +113,6 @@
 				clock-names = "ipg";
 				status = "disabled";
 			};
-
-			fec: ethernet@402d8000 {
-				compatible = "fsl,imxrt105x-fec";
-				reg = <0x402d8000 0x1000>;
-				interrupts = <114>;
-				clocks = <&enet_clk>,
-					<&enet_clk>,
-					<&enet_clk>;
-				clock-names = "ipg", "ahb", "ptp";
-				status = "disabled";
-			};
-
-			
-			
 		};
 	};
 
@@ -154,25 +123,6 @@
 	pinctrl-0 = <&pinctrl_uart0>;
 	status = "okay";
 };
-
-&fec {
-	phy-mode = "rmii";
-	phy-handle = <&ethphy0>;
-	status = "ok";
-
-	mdio {
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		ethphy0: ethernet-phy@0 {
-			reg = <2>;
-			clocks = <&rmii_clk>;
-			clock-names = "rmii-ref";
-		};
-	};
-};
-
-
 
 
 
