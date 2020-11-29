@@ -97,18 +97,6 @@
 		clock-frequency = <22000000>;
 	};
 
-	usb_clk: usb_clk {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <480000000>;
-	};
-
-	usbphy_clk: usbphy_clk {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <480000000>;
-	};
-
 	lcdif_clk: lcdif_clk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -237,54 +225,8 @@
 				clock-names = "ipg", "ahb", "per";
 				status = "disabled";
 			};
-
-			usbphy1: usbphy@400d9000 {
-				compatible = "fsl,imxrt105x-usbphy", "fsl,imx23-usbphy";
-				reg = <0x400d9000 0x1000>;
-				interrupts = <65>;
-				clocks = <&usbphy_clk>;
-			};
-
-			usbphy2: usbphy@400da000 {
-				compatible = "fsl,imxrt105x-usbphy", "fsl,imx23-usbphy";
-				reg = <0x400da000 0x1000>;
-				interrupts = <66>;
-				clocks = <&usbphy_clk>;
-			};
-
-			usbotg1: usb@402e0000 {
-				compatible = "fsl,imxrt105x-usb", "fsl,imx27-usb";
-				reg = <0x402e0000 0x200>;
-				interrupts = <113>;
-				clocks = <&usb_clk>;
-				fsl,usbphy = <&usbphy1>;
-				fsl,usbmisc = <&usbmisc 0>;
-				ahb-burst-config = <0x0>;
-				tx-burst-size-dword = <0x10>;
-				rx-burst-size-dword = <0x10>;
-				status = "disabled";
-			};
-
-			usbotg2: usb@402e0200 {
-				compatible = "fsl,imxrt105x-usb", "fsl,imx27-usb";
-				reg = <0x402e0200 0x200>;
-				interrupts = <112>;
-				clocks = <&usb_clk>;
-				fsl,usbphy = <&usbphy2>;
-				fsl,usbmisc = <&usbmisc 1>;
-				ahb-burst-config = <0x0>;
-				tx-burst-size-dword = <0x10>;
-				rx-burst-size-dword = <0x10>;
-				status = "disabled";
-			};
-
-			usbmisc: usbmisc@402e0800 {
-				#index-cells = <1>;
-				compatible = "fsl,imxrt105x-usbmisc", "fsl,imx6q-usbmisc";
-				reg = <0x402e0800 0x200>;
-				clocks = <&usb_clk>;
-			};
-
+			
+	
 			lcdif: lcdif@402b8000 {
 				compatible = "fsl,imx28-lcdif";
 				reg = <0x402b8000 0x4000>;
@@ -356,16 +298,6 @@
 	status = "ok";
 };
 
-&usbotg1 {
-	status = "okay";
-	disable-over-current;
-};
-
-&usbotg2 {
-	dr_mode = "host";
-	status = "okay";
-	disable-over-current;
-};
 
 &lcdif {
 	pinctrl-names = "default";

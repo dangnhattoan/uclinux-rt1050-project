@@ -1,0 +1,8 @@
+/home/toan/work/toolchains/arm-2011.03/bin/arm-uclinuxeabi-objcopy -v -O srec ./vmlinux vmlinux.srec
+/home/toan/work/toolchains/arm-2011.03/bin/arm-uclinuxeabi-objcopy -v -O binary vmlinux vmlinux.bin
+entry_pt=$(xxd -l 4 -s 4 -e ./vmlinux.bin | cut -c 10- | cut -c -9)
+mkimage -A arm -O u-boot -T standalone -C none -a 0x80000400 -e ${entry_pt} -n "Rotimatic Linux Image" -d  ./vmlinux.bin ./project_tres.uImage 
+cp ./project_tres.uImage ./zb/fs/firmware
+cd ./zb
+mkfs.ubifs -v -m 2048 -e 129024 -c 900 -r ./fs/ ./ubifs.img
+
