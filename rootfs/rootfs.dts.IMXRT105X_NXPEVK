@@ -25,13 +25,6 @@
 		reg = <0x80000000 0x02000000>;
 	};
 
-	dmamem {
-		compatible = "dmamem";
-		base-addr = <0x81f00000>;
-		full-size = <0x100000>;
-		fb-size = <0x80000>;
-	};
-
 	aliases {
 		pit0 = &pit;
 		gpio0 = &gpio1;
@@ -143,39 +136,7 @@
 				clock-names = "pit";
 				pit_cnt = <4>;
 			};
-
-			edma: dma-controller@40008000 {
-				compatible = "fsl,kinetis-edma";
-				reg = <0x400E8000 0x2000>, /* DMAC */
-					<0x400EC000 0x1000>; /* DMAMUX0 */
-				#dma-cells = <2>;
-				dma-channels = <32>;
-				interrupts = <0>,  <1>,  <2>,  <3>,
-					<4>,  <5>,  <6>,  <7>,
-					<8>,  <9>, <10>, <11>,
-					<12>, <13>, <14>, <15>,
-					<16>;
-				interrupt-names = "edma-tx-0,16",
-					"edma-tx-1,17",
-					"edma-tx-2,18",
-					"edma-tx-3,19",
-					"edma-tx-4,20",
-					"edma-tx-5,21",
-					"edma-tx-6,22",
-					"edma-tx-7,23",
-					"edma-tx-8,24",
-					"edma-tx-9,25",
-					"edma-tx-10,26",
-					"edma-tx-11,27",
-					"edma-tx-12,28",
-					"edma-tx-13,29",
-					"edma-tx-14,30",
-					"edma-tx-15,31",
-					"edma-err";
-				clocks = <&dmac_clk>, <&dmamux_clk>;
-				clock-names = "edma", "dmamux0";
-			};
-
+			
 			ana: ana@400d8000 {
 				compatible = "fsl,imx6sx-anatop";
 				reg = <0x400d8000 0x200>;
@@ -252,9 +213,6 @@
 				interrupts = <20>;
 				clocks = <&uart_clk>;
 				clock-names = "ipg";
-				dmas = <&edma 0 2>,
-					<&edma 0 3>;
-				dma-names = "rx","tx";
 				status = "disabled";
 			};
 
