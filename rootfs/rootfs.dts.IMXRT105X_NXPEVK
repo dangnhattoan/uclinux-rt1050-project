@@ -97,12 +97,7 @@
 		clock-frequency = <22000000>;
 	};
 
-	lcdif_clk: lcdif_clk {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <9300000>;
-	};
-
+	
 	lpi2c_clk: lpi2c_clk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -227,15 +222,7 @@
 			};
 			
 	
-			lcdif: lcdif@402b8000 {
-				compatible = "fsl,imx28-lcdif";
-				reg = <0x402b8000 0x4000>;
-				interrupts = <42>;
-				clocks = <&lcdif_clk>;
-				clock-names = "pix";
-				status = "disabled";
-			};
-
+			
 			lpi2c1: lpci2c@403f0000 {
 				compatible = "fsl,imx7ulp-lpi2c";
 				reg = <0x403f0000 0x4000>;
@@ -299,41 +286,6 @@
 };
 
 
-&lcdif {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_lcdif>;
-	display = <&display0>;
-	status = "okay";
-	data-swizzle;
-
-	imx-ana-init = "fsl,imx6sx-anatop";
-	imx-ccm-init = "fsl,imx6sx-ccm";
-
-	display0: display0 {
-		model = "RK043FN02H-CT";
-		bits-per-pixel = <32>;
-		bus-width = <16>;
-
-		display-timings {
-			native-mode = <&timing0>;
-			timing0: timing0 {
-				clock-frequency = <9300000>;
-				hactive = <480>;
-				vactive = <272>;
-				hback-porch = <8>;
-				hfront-porch = <4>;
-				vback-porch = <2>;
-				vfront-porch = <4>;
-				hsync-len = <41>;
-				vsync-len = <10>;
-				hsync-active = <0>;
-				vsync-active = <0>;
-				de-active = <1>;
-				pixelclk-active = <0>;
-			};
-		};
-	};
-};
 
 #define MXRT105X_PAD_CFG_LCD /*0x79*/ 0x1b0b0
 #define MXRT105X_PAD_CFG_I2C	0x4001b8b1
@@ -343,32 +295,6 @@
 		fsl,pins = <
 			MXRT105X_PAD_AD_B0_12_LPUART1_TX	MXRT105X_PAD_CFG_UART
 			MXRT105X_PAD_AD_B0_13_LPUART1_RX	MXRT105X_PAD_CFG_UART
-		>;
-	};
-	pinctrl_lcdif: lcdifgrp {
-		fsl,pins = <
-			MXRT105X_PAD_B0_00_LCD_CLK	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_01_LCD_ENABLE	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_02_LCD_HSYNC	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_03_LCD_VSYNC	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_04_LCD_DATA00	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_05_LCD_DATA01	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_06_LCD_DATA02	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_07_LCD_DATA03	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_08_LCD_DATA04	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_09_LCD_DATA05	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_10_LCD_DATA06	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_11_LCD_DATA07	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_12_LCD_DATA08	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_13_LCD_DATA09	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_14_LCD_DATA10	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B0_15_LCD_DATA11	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B1_00_LCD_DATA12	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B1_01_LCD_DATA13	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B1_02_LCD_DATA14	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B1_03_LCD_DATA15	MXRT105X_PAD_CFG_LCD
-			MXRT105X_PAD_B1_15_GPIO2_IO31	MXRT105X_PAD_CFG_GPIO
-			MXRT105X_PAD_AD_B0_02_GPIO1_IO02 MXRT105X_PAD_CFG_GPIO
 		>;
 	};
 	pinctrl_gpio: gpiogrp {
