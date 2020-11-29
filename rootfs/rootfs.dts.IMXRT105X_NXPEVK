@@ -58,11 +58,6 @@
 				pit_cnt = <4>;
 			};
 			
-			iomuxc: iomuxc@401f8000 {
-				compatible = "fsl,imxrt105x-iomuxc";
-				reg = <0x401f8000 0x4000>;
-			};
-			
 			uart0: serial@40184000 {
 				compatible = "fsl,imxrt1050-lpuart";
 				reg = <0x40184000 0x1000>;
@@ -77,8 +72,6 @@
 };
 
 &uart0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_uart0>;
 	status = "okay";
 };
 
@@ -86,13 +79,4 @@
 
 #define MXRT105X_PAD_CFG_LCD /*0x79*/ 0x1b0b0
 #define MXRT105X_PAD_CFG_I2C	0x4001b8b1
-
-&iomuxc {
-	pinctrl_uart0: uart0grp {
-		fsl,pins = <
-			MXRT105X_PAD_AD_B0_12_LPUART1_TX	MXRT105X_PAD_CFG_UART
-			MXRT105X_PAD_AD_B0_13_LPUART1_RX	MXRT105X_PAD_CFG_UART
-		>;
-	};
-};
 
