@@ -74,7 +74,7 @@ $(XIP_CUSTOM_APPS)	:
 	 CROSS_COMPILE_APPS=arm-v7-linux-uclibceabi- CFLAGS=${XIP_CFLAGS} LDFLAGS=${XIP_LDFLAGS} make -C $@ all
 
 clean		: kclean bclean aclean
-	rm -rf $(SAMPLE).$(KERNEL_IMAGE) $(SAMPLE).$(KERNEL_DTB)
+	rm -rf $(SAMPLE).$(KERNEL_IMAGE) $(SAMPLE).$(KERNEL_DTB) ./fs *.img
 
 kclean		:
 	$(MAKE) -C $(INSTALL_ROOT)/linux clean
