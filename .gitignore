@@ -5,3 +5,4 @@ moc_*.cpp
 minfs.initramfs
 *.cpio
 *.gdb
+./tools/u-boot_flasher/*.sb

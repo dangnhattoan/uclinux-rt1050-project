@@ -1,0 +1,14 @@
+echo ===== Executing zpl.script =====
+setexpr scriptSzAlign $filesize / 0x20
+setexpr scriptSzAlign $scriptSzAlign + 1
+setexpr scriptSzAlign $scriptSzAlign * 0x20
+setexpr imgloadaddr $loadaddr + $scriptSzAlign
+# load ubifs image
+if fatload usb 0:auto $imgloadaddr ubifs.img
+  then echo Loaded ubifs.img to $imgloadaddr
+    echo ===== Writing image to UBI Volume =====
+    ubi write $imgloadaddr fs $filesize
+    echo ===== Done writing to UBI Volume =====
+  else echo Error on loading ubifs.img!
+fi
+
