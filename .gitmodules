@@ -1,0 +1,9 @@
+[submodule "linux"]
+	path = linux
+	url = git@github.com:dangnhattoan/linux-upstream.git
+[submodule "u-boot"]
+	path = u-boot
+	url = git@github.com:dangnhattoan/u-boot-vybrid.git
+[submodule "A2F/busybox"]
+	path = A2F/busybox
+	url = git@github.com:mirror/busybox.git
