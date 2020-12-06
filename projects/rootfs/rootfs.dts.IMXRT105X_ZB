@@ -17,8 +17,8 @@
 #include "imxrt105x-pinfunc.h"
 
 / {
-	model = "NXP IMXRT1050 board";
-	compatible = "nxp,imxrt1050-evk", "nxp,imxrt105x";
+	model = "IMXRT1050 ZB v3.0";
+	compatible = "nxp,imxrt1050-zb", "nxp,imxrt105x";
 
 	memory {
 		device_type = "memory";
