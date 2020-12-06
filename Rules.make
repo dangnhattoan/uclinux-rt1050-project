@@ -136,11 +136,13 @@ dtb		: $(SAMPLE).$(KERNEL_DTS)
 	KCFLAGS=$(KERNEL_CFLAGS) $(MAKE) -C $(INSTALL_ROOT)/linux \
 		$(KERNEL_IMAGE) SAMPLE=${SAMPLE}
 	cp -f $(KERNEL_BOOT)/$(KERNEL_IMAGE) $@
-        
+
+#UBIFS         
 	rm -rf ./fs
 	mkdir -p ./fs/firmware
 	cp -f $@ ./fs/firmware/project_tres.uImage
 	mkfs.ubifs -v -m 2048 -e 129024 -c 900 -r ./fs/ ./ubifs.img
+	mkimage -T script -C none -n "Zimplistic Script File" -A arm -d ../zpl.script ./zpl_script.img
 
 clone		:
 	@[ ! -z ${new} ] || \
