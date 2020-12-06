@@ -5,3 +5,5 @@ mpu/t1
 mpu/t2
 mpu/t3
 mpu/t4
+*.img
+./fs

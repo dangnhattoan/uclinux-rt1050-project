@@ -10,6 +10,7 @@ $(APPS)		:
 	make distclean; \
 	case $$MCU in \
 	  IMXRT105X_NXPEVK) cfg="mxrt105x-evk_defconfig";; \
+	  IMXRT105X_ZB) cfg="mxrt105x-zb_defconfig";; \
 	  STM32F4X9) cfg="stm-som_config";; \
 	  STM32F769IDISCO) cfg="stm32f769i-discovery";; \
 	  STM32F7) \
