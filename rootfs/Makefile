@@ -1,5 +1,5 @@
 SAMPLE		:= rootfs
-CUSTOM_APPS	:= env lcdtest mpu
+CUSTOM_APPS	:= env mpu
 
 all: fw
 
