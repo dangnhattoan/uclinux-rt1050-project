@@ -1,0 +1,82 @@
+/*
+ * Copyright 2017
+ * Dmitry Konyshev, Emcraft Systems, <probables@emcraft.com>
+ *
+ * IMXRT1050-EVK
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * publishhed by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "armv7-m.dtsi"
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/gpio/gpio.h>
+#include "imxrt105x-pinfunc.h"
+
+/ {
+	model = "IMXRT1050 ZB v3.0";
+	compatible = "nxp,imxrt1050-zb", "nxp,imxrt105x";
+
+	memory {
+		device_type = "memory";
+		reg = <0x80000000 0x01000000>;
+	};
+
+	aliases {
+		pit0 = &pit;
+		serial0 = &uart0;
+	};
+
+	periph_clk: periph_clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <75000000>;
+	};
+
+	uart_clk: uart_clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <6000000>;
+	};
+
+	soc {
+		aips0: aips-bus@40000000 {
+			compatible = "fsl,aips-bus", "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+
+			pit: pit@40084000 {
+				compatible = "fsl,vf610-pit";
+				reg = <0x40084000 0x1000>;
+				interrupts = <122>;
+				clocks = <&periph_clk>;
+				clock-names = "pit";
+				pit_cnt = <4>;
+			};
+			
+			uart0: serial@40184000 {
+				compatible = "fsl,imxrt1050-lpuart";
+				reg = <0x40184000 0x1000>;
+				interrupts = <20>;
+				clocks = <&uart_clk>;
+				clock-names = "ipg";
+				status = "disabled";
+			};
+		};
+	};
+
+};
+
+&uart0 {
+	status = "okay";
+};
+
+
+
+#define MXRT105X_PAD_CFG_LCD /*0x79*/ 0x1b0b0
+#define MXRT105X_PAD_CFG_I2C	0x4001b8b1
+
