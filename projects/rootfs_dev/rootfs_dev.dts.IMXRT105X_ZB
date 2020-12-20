@@ -18,7 +18,7 @@
 
 / {
 	model = "IMXRT1050 ZB v3.0";
-	compatible = "nxp,imxrt1050-zb", "nxp,imxrt105x";
+	compatible = "nxp,imxrt1050-evk", "nxp,imxrt105x";
 
 	memory {
 		device_type = "memory";
@@ -28,7 +28,25 @@
 	aliases {
 		pit0 = &pit;
 		serial0 = &uart0;
+		gpio0 = &gpio1;
+                gpio1 = &gpio2;
+                gpio2 = &gpio3;
+                gpio3 = &gpio4;
+                gpio4 = &gpio5;
+		i2c0 = &lpi2c1;
 	};
+
+	core_clk: core_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <600000000>;
+        };
+
+	ipg_clk: ipg_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <150000000>;
+        };
 
 	periph_clk: periph_clk {
 		compatible = "fixed-clock";
@@ -41,6 +59,66 @@
 		#clock-cells = <0>;
 		clock-frequency = <6000000>;
 	};
+
+	osc_clk: osc_clk { 
+                compatible = "fixed-clock"; 
+                #clock-cells = <0>; 
+                clock-frequency = <24000000>; 
+        };
+
+        dmac_clk: dmac_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <150000000>;
+        };
+
+	dmamux_clk: dmamux_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <150000000>;
+        };
+
+	enet_clk: enet_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <150000000>;
+        };
+
+	rmii_clk: rmii_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <50000000>;
+        };
+
+	usdhc_clk: usdhc_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <22000000>;
+        };
+
+	usb_clk: usb_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <480000000>;
+        };
+
+        usbphy_clk: usbphy_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <480000000>;
+        };
+
+        lcdif_clk: lcdif_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <9300000>;
+        };
+
+	lpi2c_clk: lpi2c_clk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <60000000>;
+        };
 
 	soc {
 		aips0: aips-bus@40000000 {
@@ -57,6 +135,71 @@
 				clock-names = "pit";
 				pit_cnt = <4>;
 			};
+
+			ccm: ccm@400fc000 {
+                                compatible = "fsl,imx6sx-ccm";
+                                reg = <0x400fc000 0x100>;
+                        };
+
+			iomuxc: iomuxc@401f8000 {
+                                compatible = "fsl,imxrt105x-iomuxc";
+                                reg = <0x401f8000 0x4000>;
+                        };
+
+			gpio1: gpio@401b8000 {
+                                compatible = "fsl,imxrt105x-gpio";
+                                reg = <0x401b8000 0x1000>;
+                                gpio-controller;
+                                #gpio-cells = <2>;
+                                interrupts = <80>, <81>;
+                                interrupt-controller;
+                                #interrupt-cells = <2>;
+                                gpio-ranges = <&iomuxc 0 0 32>;
+                        };
+
+                        gpio2: gpio@401bc000 {
+                                compatible = "fsl,imxrt105x-gpio";
+                                reg = <0x401bc000 0x1000>;
+                                gpio-controller;
+                                #gpio-cells = <2>;
+                                interrupts = <82>, <83>;
+                                interrupt-controller;
+                                #interrupt-cells = <2>;
+                                gpio-ranges = <&iomuxc 0 32 32>;
+                        };
+
+                        gpio3: gpio@401c0000 {
+                                compatible = "fsl,imxrt105x-gpio";
+                                reg = <0x401c0000 0x1000>;
+                                gpio-controller;
+                                #gpio-cells = <2>;
+                                interrupts = <84>, <85>;
+                                interrupt-controller;
+                                #interrupt-cells = <2>;
+                                gpio-ranges = <&iomuxc 0 64 32>;
+                        };
+
+			gpio4: gpio@401c4000 {
+                                compatible = "fsl,imxrt105x-gpio";
+                                reg = <0x401c4000 0x1000>;
+                                gpio-controller;
+                                #gpio-cells = <2>;
+                                interrupts = <86>, <87>;
+                                interrupt-controller;
+                                #interrupt-cells = <2>;
+                                gpio-ranges = <&iomuxc 0 96 32>;
+                        };
+
+                        gpio5: gpio@400c0000 {
+                                compatible = "fsl,imxrt105x-gpio";
+                                reg = <0x400c0000 0x1000>;
+                                gpio-controller;
+                                #gpio-cells = <2>;
+                                interrupts = <88>, <89>;
+                                interrupt-controller;
+                                #interrupt-cells = <2>;
+                                gpio-ranges = <&iomuxc 0 128 14>;
+                        };
 			
 			uart0: serial@40184000 {
 				compatible = "fsl,imxrt1050-lpuart";
@@ -66,8 +209,29 @@
 				clock-names = "ipg";
 				status = "disabled";
 			};
+
+			lpi2c1: lpci2c@403f0000 {
+                                compatible = "fsl,imx7ulp-lpi2c";
+                                reg = <0x403f0000 0x4000>;
+                                interrupts = <28>;
+                                clocks = <&lpi2c_clk>;
+                                status = "disabled";
+                        };
 		};
 	};
+	
+	leds {
+                compatible = "gpio-leds";
+                pinctrl-names = "default";
+                pinctrl-0 = <&pinctrl_leds>;
+#if 0
+                user-led {
+                        gpios = <&gpio1 26 GPIO_ACTIVE_LOW>;
+                        retain-state-suspended;
+                        default-state = "off";
+                };
+#endif
+        };
 
 };
 
@@ -79,4 +243,56 @@
 
 #define MXRT105X_PAD_CFG_LCD /*0x79*/ 0x1b0b0
 #define MXRT105X_PAD_CFG_I2C	0x4001b8b1
+
+&iomuxc {
+#if 0
+        pinctrl_gpio: gpiogrp {
+                fsl,pins = <
+		 	MXRT105X_PAD_AD_B0_02_GPIO1_IO02	MXRT105X_PAD_CFG_GPIO
+                >;
+        };
+#endif
+
+	 pinctrl_lpi2c1: lpi2cgrp {
+                fsl,pins = <
+                        MXRT105X_PAD_AD_B1_00_LPI2C1_SCL        MXRT105X_PAD_CFG_I2C
+                        MXRT105X_PAD_AD_B1_01_LPI2C1_SDA        MXRT105X_PAD_CFG_I2C
+                >;
+        };
+
+	pinctrl_leds: ledsgrp {
+                fsl,pins = <
+#if 0
+                        MXRT105X_PAD_AD_B1_10_GPIO1_IO26        MXRT105X_PAD_CFG_GPIO
+                        MXRT105X_PAD_AD_B1_11_GPIO1_IO27        MXRT105X_PAD_CFG_GPIO
+#endif
+			MXRT105X_PAD_AD_B0_02_GPIO1_IO02	MXRT105X_PAD_CFG_GPIO
+			MXRT105X_PAD_AD_B1_02_GPIO1_IO18	MXRT105X_PAD_CFG_GPIO
+
+                >;
+        };
+
+};
+
+&lpi2c1 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_lpi2c1>;
+        status = "okay";
+
+        imx-ccm-init = "fsl,imx6sx-ccm";
+
+        #address-cells = <1>;
+        #size-cells = <0>;
+#if 0
+        ft: touchscreen {
+                compatible = "focaltech,ft5x2";
+                reg = <0x38>;
+                pinctrl-names = "default";
+                pinctrl-0 = <&pinctrl_ft5x2>;
+                x-max = <480>;
+                y-max = <272>;
+                irq-gpio = <&gpio1 11 GPIO_ACTIVE_LOW>;
+        };
+#endif
+};
 

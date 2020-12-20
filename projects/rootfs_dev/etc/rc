@@ -53,3 +53,8 @@ amixer >/dev/null 2>&1
 if [ $? -eq 0 ]; then
 	amixer -q sset 'Headphone' 50%,50% &
 fi
+
+# Turn ON the SW POWER 
+echo 18 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio18/direction
+echo 1 > /sys/class/gpio/gpio18/value
